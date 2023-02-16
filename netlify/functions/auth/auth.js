@@ -13,7 +13,7 @@ const handler = async (event) => {
   return {
     statusCode: 200,
     headers: {
-      'Set-Cookie': `username=${username};`,
+      'Set-Cookie': `username=${body.username};`,
     },
   };
 }
