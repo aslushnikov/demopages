@@ -1,4 +1,4 @@
-// Docs on event and context https://docs.netlify.com/functions/build/#code-your-function-2
+
 const handler = async (event) => {
   if (!event.body)
     return { statusCode: 400, body: 'missing body' };
