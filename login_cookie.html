@@ -1,0 +1,55 @@
+<!doctype html>
+<link rel=stylesheet href="./typography.css">
+<script type=module>
+import { html } from './zhtml.js';
+
+window.addEventListener('DOMContentLoaded', initialize, false);
+
+function getCookieValue(name) {
+  return document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
+}
+
+function logout() {
+  document.cookie = 'username=;';
+  location.reload();
+}
+
+function login() {
+  const username = window.username.value.trim();
+  if (!username) {
+    alert('Please enter a user name to log in!');
+    return;
+  }
+  document.cookie = `username=${username}`;
+  location.reload();
+}
+
+async function initialize() {
+  const username = getCookieValue('username');
+  if (username) {
+    document.body.append(html`
+      <hbox style="justify-content: center;">
+        <div>
+          <h1>Hello, "${username}"!</h1>
+          <button onclick=${logout}>Log Out</button>
+        </div>
+      </hbox>
+    `);
+  } else {
+    document.body.append(html`
+      <hbox style="justify-content: center;">
+        <vbox>
+          <h1>Please, Login!</h1>
+          <div>
+            <label style="margin-right: 1em;" for="username">User name:</label>
+            <input style="margin-right: 1em;" id=username placeholder="username" onkeypress=${e => e.key !== 'Enter' || login()}>
+            <button onclick=${login}>Log In</button>
+          </div>
+        </vbox>
+      </hbox>
+    `);
+  }
+}
+
+</script>
+
